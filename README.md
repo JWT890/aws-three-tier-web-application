@@ -30,3 +30,12 @@ Name the role EC2-WebServer-Role with the description of allows EC2 instances to
 
 # Database
 
+Then go and search Aurora and RDS and should see this:  
+![RDS](./images/rds.png)    
+In the left panel, click on subnet groups and then click on create DB subnet group.   
+Name it three-tier-db-subnet-group with a description saying Private Subnets for RDS, with the three-tier-vpc. In Add Subnets, choose all the us-east-1a and 1b availability zones and for subnets choose the two private-db ones, then hit create and it should appear.    
+![RDS2](./images/rds2.png)  
+Then go to databases in the left panel and in the middle of the screen, click on create database button and on the dropdown click on full configuration. Then for templates select either Dev/Test or Free Tier.    
+Then scroll down to the database settings and name the instance three-tier-db with a username such as admin, then a strong password.    
+Then scroll down to instance configuration and select the burstable instance with db.t3g.micro. Then scroll down to storage and for storage type select the General Purpose SSD gp3 with allocated storage of 30 Gigs, enable storage autoscaling with a maximum storage threshold of 100 GB.   
+Then scroll down to connectivity and for the vpc, choose three-tier-vpc

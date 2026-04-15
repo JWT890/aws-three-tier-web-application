@@ -22,3 +22,11 @@ Then create a second security group named web-server-sg with a description of Al
 Then create a third security group named db-sg with a description of Allow MySQL from web servers and the three tier vpc with the inbound rules set to type as MySQL/Aurora with the source as web-server-sg. Then click on create security group.  
 
 # IAM
+Then go to IAM and click on roles in the left pane and click on create role.    
+For trusted service choose AWS Service and for use case choose EC2 like so: 
+![EC2](./images/iam.png)    
+Then click on next. Then in permissions choose AmazonSSMManagedInstanceCore and CloudWatchAgentServerPolicy and hit next.   
+Name the role EC2-WebServer-Role with the description of allows EC2 instances to use both SSM and CloudWatch. Then click on create role.    
+
+# Database
+

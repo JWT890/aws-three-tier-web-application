@@ -38,4 +38,9 @@ Name it three-tier-db-subnet-group with a description saying Private Subnets for
 Then go to databases in the left panel and in the middle of the screen, click on create database button and on the dropdown click on full configuration. Then for templates select either Dev/Test or Free Tier.    
 Then scroll down to the database settings and name the instance three-tier-db with a username such as admin, then a strong password.    
 Then scroll down to instance configuration and select the burstable instance with db.t3g.micro. Then scroll down to storage and for storage type select the General Purpose SSD gp3 with allocated storage of 30 Gigs, enable storage autoscaling with a maximum storage threshold of 100 GB.   
-Then scroll down to connectivity and for the vpc, choose three-tier-vpc
+Then scroll down to connectivity and for the vpc, choose three-tier-vpc, then check to make sure db-subnet-group is corrent, no to public access and for VPC security group choose the db-sg. THen scroll down to the additional configuration and for initial database name, name it appdb with a backup retention period of 7 days and encryption enabled. Then click on create database and wait a few minutes for it to configure.
+After a few minutes:    
+![DB](./images/db.png)  
+
+# Application layer
+Then go to the EC2 screen and click on launch a template

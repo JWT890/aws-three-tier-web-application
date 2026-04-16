@@ -43,4 +43,76 @@ After a few minutes:
 ![DB](./images/db.png)  
 
 # Application layer
-Then go to the EC2 screen and click on launch a template
+Then go to the EC2 side and and on the left side click on launch instance. Name it web-server-template with a description of Template for web servers with Amazon Linux AMI and t2.micro and select on create new key pair and name it three-tier-key with it as RSA and .pem and download it. Then in security groups choose the web-server-sg group and scroll down to advanced details.  
+For the IAM Instance profile, choose the EC2-WebServer-Role. Then scroll down to user data and input this:  
+#!/bin/bash 
+   # Update system  
+   dnf update -y    
+   
+   # Install Apache, PHP, and MySQL client  
+   dnf install -y httpd php php-mysqlnd mariadb105  
+   
+   # Start and enable Apache    
+   systemctl start httpd    
+   systemctl enable httpd   
+   
+   # Create simple PHP test page    
+   cat > /var/www/html/index.php << 'PHPEOF'    
+   <!DOCTYPE html>  
+   <html>   
+   <head>   
+       <title>Three-Tier Application</title>    
+       <style>  
+           body { font-family: Arial; margin: 50px; background: #f0f0f0; }  
+           .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }    
+           .success { color: green; }   
+           .error { color: red; }   
+           h1 { color: #232F3E; }   
+       </style> 
+   </head>  
+   <body>   
+       <div class="container">  
+           <h1>🚀 Three-Tier Web Application</h1>   
+           <p><strong>Server:</strong> <?php echo gethostname(); ?></p> 
+           <p><strong>Server IP:</strong> <?php echo $_SERVER['SERVER_ADDR']; ?></p>    
+           
+           <?php    
+           // Database connection details   
+           $db_host = "YOUR_RDS_ENDPOINT_HERE"; 
+           $db_name = "appdb";  
+           $db_user = "admin";  
+           $db_pass = "YOUR_PASSWORD_HERE"; 
+           
+           try {    
+               $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);  
+               $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+               echo '<p class="success">✓ Database Connection: <strong>SUCCESS</strong></p>';  
+               
+               // Get database version  
+               $stmt = $conn->query("SELECT VERSION()");    
+               $version = $stmt->fetchColumn(); 
+               echo "<p>Database Version: $version</p>";    
+               
+           } catch(PDOException $e) {   
+               echo '<p class="error">✗ Database Connection: <strong>FAILED</strong></p>'; 
+               echo '<p class="error">Error: ' . $e->getMessage() . '</p>'; 
+           }    
+           ?>   
+           
+           <hr> 
+           <p><em>Architecture: ALB → EC2 (Multi-AZ) → RDS (Multi-AZ)</em></p>  
+       </div>   
+   </body>  
+   </html>  
+   PHPEOF   
+   
+   # Set permissions    
+   chown -R apache:apache /var/www/html 
+   chmod -R 755 /var/www/html   
+Then click on create launch template and go to EC2 dashboard -> instances and click on launch instance right down arror and choose launch from template.    
+After clicking on it you will be taken to the launch instance from template page and in the source template, you will see the web-server template option and choose it, in summary increase number of instances to 2, then go to network settings and select, for subnet, private-app-subnet-1a and disable auto assign IP and then click on launch instance. Then create a second one with the same format but with the private-app-subnet-1b  
+Then go to the RDS dashboard and go to databases and click on the three-tier-db and go to connectivity and security. There will be three options to choose from: code snippet, cloudshell, and endpoint. Click on endpoint and you will find the endpoint in Endpoint & port and copy it. Then go back to the EC2 dashboard to instances and select on either of them and click on actions -> instance settings, then find edit user data like so:  
+![Settings](./images/settings.png)   
+Then go to the db_host and password lines and replace with the arn and password for each.   
+
+# Load Balancer

@@ -46,17 +46,17 @@ After a few minutes:
 Then go to the EC2 side and and on the left side click on launch instance. Name it web-server-template with a description of Template for web servers with Amazon Linux AMI and t2.micro and select on create new key pair and name it three-tier-key with it as RSA and .pem and download it. Then in security groups choose the web-server-sg group and scroll down to advanced details.  
 For the IAM Instance profile, choose the EC2-WebServer-Role. Then scroll down to user data and input this:  
 #!/bin/bash 
-   # Update system  
+   Update system  
    dnf update -y    
    
-   # Install Apache, PHP, and MySQL client  
+   Install Apache, PHP, and MySQL client  
    dnf install -y httpd php php-mysqlnd mariadb105  
    
-   # Start and enable Apache    
+   Start and enable Apache    
    systemctl start httpd    
    systemctl enable httpd   
    
-   # Create simple PHP test page    
+   Create simple PHP test page    
    cat > /var/www/html/index.php << 'PHPEOF'    
    <!DOCTYPE html>  
    <html>   
@@ -106,7 +106,7 @@ For the IAM Instance profile, choose the EC2-WebServer-Role. Then scroll down to
    </html>  
    PHPEOF   
    
-   # Set permissions    
+   Set permissions    
    chown -R apache:apache /var/www/html 
    chmod -R 755 /var/www/html   
 Then click on create launch template and go to EC2 dashboard -> instances and click on launch instance right down arror and choose launch from template.    

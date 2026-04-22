@@ -69,7 +69,7 @@ For the IAM Instance profile, choose the EC2-WebServer-Role. Then scroll down to
            .error { color: red; }   
            h1 { color: #232F3E; }   
        </style> 
-   </head>  
+   </head>     
    <body>   
        <div class="container">  
            <h1>🚀 Three-Tier Web Application</h1>   
@@ -109,6 +109,12 @@ For the IAM Instance profile, choose the EC2-WebServer-Role. Then scroll down to
    Set permissions    
    chown -R apache:apache /var/www/html 
    chmod -R 755 /var/www/html   
+Or like this:   
+![Code1](./images/code1.png)    
+![Code2](./images/code2.png)    
+![Code3](./images/code3.png)    
+![Code4](./images/code4.png)    
+![Code5](./images/code5.png)
 Then click on create launch template and go to EC2 dashboard -> instances and click on launch instance right down arror and choose launch from template.    
 After clicking on it you will be taken to the launch instance from template page and in the source template, you will see the web-server template option and choose it, in summary increase number of instances to 2, then go to network settings and select, for subnet, private-app-subnet-1a and disable auto assign IP and then click on launch instance. Then create a second one with the same format but with the private-app-subnet-1b  
 Then go to the RDS dashboard and go to databases and click on the three-tier-db and go to connectivity and security. There will be three options to choose from: code snippet, cloudshell, and endpoint. Click on endpoint and you will find the endpoint in Endpoint & port and copy it. Then go back to the EC2 dashboard to instances and select on either of them and click on actions -> instance settings, then find edit user data like so:  

@@ -122,3 +122,6 @@ Then go to the RDS dashboard and go to databases and click on the three-tier-db 
 Then go to the db_host and password lines and replace with the arn and password for each.   
 
 # Load Balancer
+Then go to EC2 and head to target groups and click on create target group and see this screen:  
+![Target](./images/target.png)  
+Select the instance target type, name it web-servers-tg with HTTP set to port 80, ipv4, VPC set to three tier, then scroll down to advanced health check settings and select traffic port, 2-> Healthy Overload, 3-> Unhealthy threshold, timeout to 5 and interval to 30 seconds. 

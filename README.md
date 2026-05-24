@@ -136,4 +136,15 @@ And click on application load balancer and see this:
 Name it three-tier-alb with it internet-facing, IPv4, networking mapping have it set to the three-tier-vpc, then select both us-east-1a and b to add 1a and 1b subnets that were created.   
 Then for security groups, delete the default and add the alb-sg one instead.    
 Next scroll down to listeners and routing and select HTTP protocol to port 80, then for routing select forward to target groups with target groups set to web-servers-tg. Then click on create load balancer.   
+Then go load balancers in EC2 and see that three-tier-alb has been created and wait for a few minutes.
+
+# Load Balancer Test
+Click on the alb that was created and copy the DNS name after clicking on it.  
+Something to also take note as well is to recreate the NAT Gateway if it was deleted and name it three-tier-nat, then go to VPC -> Route Tables and find the private subnets used for this and edit there routes. If they are set to 0.0.0.0/0 that means its a blackhole and needs to be changed. To do so click on edit route table and change the NAT Gateway target to three-tier-nat like so:  
+![Active](./images/active.png)  
+More than likely it will say blackhole before you change it. Then click on both and set the subnet associations
+![Subnet1](./images/subnet1.png)    
+![Subnet2](./images/subnet2.png)    
+![Main](./images/main.png)  
+Then go back to EC2 and reboot the instances and connect to each one with SSM Manager
 

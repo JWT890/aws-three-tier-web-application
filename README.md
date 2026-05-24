@@ -124,4 +124,16 @@ Then go to the db_host and password lines and replace with the arn and password 
 # Load Balancer
 Then go to EC2 and head to target groups and click on create target group and see this screen:  
 ![Target](./images/target.png)  
-Select the instance target type, name it web-servers-tg with HTTP set to port 80, ipv4, VPC set to three tier, then scroll down to advanced health check settings and select traffic port, 2-> Healthy Overload, 3-> Unhealthy threshold, timeout to 5 and interval to 30 seconds. 
+Select the instance target type, name it web-servers-tg with HTTP set to port 80, ipv4, VPC set to three tier, then scroll down to advanced health check settings and select traffic port, 2-> Healthy Overload, 3-> Unhealthy threshold, timeout to 5 and interval to 30 seconds. Then click on next and see this: 
+![Target1](./images/target1.png)    
+Click on both targets with the ports chosen as port 80 and click on include as pending below and this occurs:   
+![Pending](./images/pending.png)    
+Then click on next and click on create target group.    
+Then go to the left side once again and click on Load Balancers and click on create load balancer drop down like so:    
+![Load](./images/load.png)  
+And click on application load balancer and see this:    
+![App](./images/app.png)   
+Name it three-tier-alb with it internet-facing, IPv4, networking mapping have it set to the three-tier-vpc, then select both us-east-1a and b to add 1a and 1b subnets that were created.   
+Then for security groups, delete the default and add the alb-sg one instead.    
+Next scroll down to listeners and routing and select HTTP protocol to port 80, then for routing select forward to target groups with target groups set to web-servers-tg. Then click on create load balancer.   
+

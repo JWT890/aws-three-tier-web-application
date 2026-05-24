@@ -146,5 +146,12 @@ More than likely it will say blackhole before you change it. Then click on both 
 ![Subnet1](./images/subnet1.png)    
 ![Subnet2](./images/subnet2.png)    
 ![Main](./images/main.png)  
-Then go back to EC2 and reboot the instances and connect to each one with SSM Manager
+Then go back to EC2 and reboot the instances and connect to each one with SSM Manager and run these commands on each:   
+sudo dnf install -y httpd php   
+sudo systemctl start httpd  
+sudo systemctl enable httpd 
+sudo bash -c 'echo "<?php echo phpinfo(); ?>" > /var/www/html/index.php'    
+This should save the connectivity isssues from before and paste the DNS name into Chrome and see this:  
+![DNS](./images/dns.png)    
+
 

@@ -8,7 +8,7 @@ Then scroll down till you see number of availabity zones and have it as 2 with n
 ![NAT](./images/nat.png)   
 Then click on create vpc button at the bottom of the page. Then wait for a few seconds for it to pop up.    
 Then go to the VPC dashboard and go to subnets and click on create a subnet. Since there are 6 of six of them it will take a couple seconds.    
-For the First subnet name it public-subnet-1a with us-east-1a as its AZ zone with a ipv4 CIDR as 10.0.0.0/16.   
+For the First subnet name it public-subnet-1a with us-east-1a as its AZ zone with a ipv4 CIDR as 10.0.0.0/24.   
 For the second subnet click on create new subnet and name it public-subnet-1b in us-east-1b with IPV4 CIDR as 10.0.16.0/24. Then click on create new subnet. 
 For the third subnet, name it private-app-subnet-1a in us-east-1a with the subnet CIDR block as 10.0.50.0/24, Then click on create new subnet. 
 For the fourth subnet, name it private-app-subnet-1b in us-east-1b with the subnet CIDR block as 10.0.51.0/24. Then click on create new subnet.
@@ -170,3 +170,6 @@ Change the stat to maximum and the period to 1 minute. Set the value to greater 
 Then set the notification for in alarm, create a new topic and set your email to receive it and name the topic whatever as long as it has a _ in it. Then hit next and give an alarm name of ALB-UnhealthyTargets and hit next. 
 It will ask to create a SNS Subscription, click on request confirm subscription and you will get an email to confirm it.    
 ![Mail](./images/mail.png)  
+
+# Diagram
+![alt text](image.png)

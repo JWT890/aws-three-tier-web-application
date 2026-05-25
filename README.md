@@ -170,19 +170,3 @@ Change the stat to maximum and the period to 1 minute. Set the value to greater 
 Then set the notification for in alarm, create a new topic and set your email to receive it and name the topic whatever as long as it has a _ in it. Then hit next and give an alarm name of ALB-UnhealthyTargets and hit next. 
 It will ask to create a SNS Subscription, click on request confirm subscription and you will get an email to confirm it.    
 ![Mail](./images/mail.png)  
-
-# Auto Scaling Group
-Go the EC2 page and click on create auto scaling group and name it web-servers-asg with the web-server-template and latest version like so: 
-![Auto](./images/auto.png)  
-Then click on next and in instance launch options choose the three-tier-vpc with subnets private 1a and 1b in network and hit next. 
-Then in load balancer select the option of choose from existing and choose the web-servers-tg one, then scroll on down to health checks and turn on elastic load balancing and set grace period to 300 seconds and hit next.    
-Then in Group size have desired capacity set to 2, minimum to 2 and maximum to 6 and select Target tracking scaling policy and name the first policy to target-tracking-cpu with target value set to 50 and warmup to 300 seconds.  
-Then click on next add a notification like so:  
-![Alert](./images/alert.png)    
-Then hit next and go to tags and with the key named tag, value set to web-server-asg and checked for new instances and create the group. Should look like this afterward:   
-![Group](./images/group.png)    
-And you should be getting some emails about it as well. 
-Then select the asg that was create and head to automatic scaling and click on create dynamic scaling policy. Have the policy type set to Target tracking scaling, scaling policy name to target-tracking-alb-requests, metric type to Application Load Balancer request count per target, target group set to web-servers-tg, target-value to 1000 and instances need to 300 seconds like the picutre below:   
-![Policy](./images/policy.png)  
-Then click on create and once again click on create policy and set the type to Step scaling with a name of step-scaling-high-cpu and click on create CloudWatch alarm. EC2 -> Auto Scaling Group -> web-servers-asg with CPUUtilization for the metric, then for stat to average of 1 minute, static threshold set to greater than or equal to 70   
-![Graph](./images/graph.png)    

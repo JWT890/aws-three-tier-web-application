@@ -153,5 +153,20 @@ sudo systemctl enable httpd
 sudo bash -c 'echo "<?php echo phpinfo(); ?>" > /var/www/html/index.php'    
 This should save the connectivity isssues from before and paste the DNS name into Chrome and see this:  
 ![DNS](./images/dns.png)    
+Then for another test turn off one of the instances and it should be still there after refreshing.   
+![Stopped](./images/stopped.png)    
+![Site](./images/site.png)  
+This would also be reflected in target groups as well:  
+![Target2](./images/target2.png)    
 
-
+# CloudWatch Alarm
+Go to CloudWatch and click on alarms and click create alarm and see this screen:    
+![Alarm](./images/alarm.png)    
+Then click on select metric. Click on ApplicationELB -> TargetGroup -> UnHealthyHostCount or the Target Group that was created like so: 
+![Alarm1](./images/alarm1.png)  
+Then click on select metric which will get you here:    
+![Settings1](./images/settings1.png)    
+Change the stat to maximum and the period to 1 minute. Set the value to greater than or equal to 1 and hit next.    
+Then set the notification for in alarm, create a new topic and set your email to receive it and name the topic whatever as long as it has a _ in it. Then hit next and give an alarm name of ALB-UnhealthyTargets and hit next. 
+It will ask to create a SNS Subscription, click on request confirm subscription and you will get an email to confirm it.    
+![Mail](./images/mail.png)  
